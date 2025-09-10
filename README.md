@@ -1,2 +1,2 @@
-## Mikroprojekt1
+## Mikroprojekt
 ülesanne
