@@ -1,4 +1,6 @@
 <script setup>
+import { useRouter } from 'vue-router'
+
 const subjects = [
     'Matemaatika',
     'Hajusrakenduste alused',
@@ -16,6 +18,12 @@ const subjects = [
     'Projekt',
     'Soome keel'
 ];
+
+const router = useRouter()
+
+const goToRating = () => {
+    router.push('/rating')
+}
 </script>
 
 <template>
@@ -32,7 +40,7 @@ const subjects = [
                     <button class="button is-primary">Search</button>
                 </div>
             </div>
-            <div class="card mb-5" v-for="(subject, i) in subjects" :key="i">
+            <div class="card mb-5" v-for="(subject, i) in subjects" :key="i" @click="goToRating">
                 <div class="card-content">
                     <div class="content">{{ subject }}</div>
                 </div>
