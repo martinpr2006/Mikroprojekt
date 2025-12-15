@@ -4,6 +4,11 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@prisma/client": "^6.19.0",
     "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.3",
+    "prisma": "^6.19.1"
   }
 }
