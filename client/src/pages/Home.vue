@@ -45,5 +45,6 @@ onMounted(async () => {
 
 .card:hover {
     cursor: pointer;
+    transform: scale(1.03);
 }
 </style>
