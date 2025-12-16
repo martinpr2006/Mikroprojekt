@@ -22,7 +22,7 @@ export default {
     <nav class="navbar my-navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <div class="navbar-item has-text-white">
-                <p>TPT tagaisisde rakendus</p>
+                <p>TPT tagasiside rakendus</p>
             </div>
         </div>
         <div class="navbar-menu">
