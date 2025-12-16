@@ -30,15 +30,7 @@ const goToRating = () => {
     <div class="columns is-centered">
         <div class="column is-4 mt-6">
             <div class="title has-text-centered">
-                Ainevaldkonnad
-            </div>
-            <div class="field has-addons mb-5 mt-6">
-                <div class="control is-expanded">
-                    <input class="input is-normal" type="text" placeholder="Sisesta õppeaine nimetus" />
-                </div>
-                <div class="control">
-                    <button class="button is-primary">Search</button>
-                </div>
+                Õppeained
             </div>
             <div class="card mb-5" v-for="(subject, i) in subjects" :key="i" @click="goToRating">
                 <div class="card-content">
