@@ -4,9 +4,9 @@
       v-for="i in maxStars"
       :key="i"
       @click="setRating(i)"
-      @mouseover="hoverRating(i)"
+      @mouseenter="hoverRating(i)"
       @mouseleave="resetHover"
-      :class="['star', i <= (isHovered ? hoverValue : rating) ? 'filled' : '']"
+      :class="['star', i <= (hoverValue || rating) ? 'filled' : '']"
     >
       ★
     </div>
@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 export default {
   props: {
-    value: {
+    modelValue: {
       type: Number,
       default: 0,
     },
@@ -27,20 +27,23 @@ export default {
       default: 5,
     },
   },
+  emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const rating = ref(props.value);
-    const isHovered = ref(false);
+    const rating = ref(props.modelValue);
     const hoverValue = ref(0);
+
+    // Watch for prop changes to keep in sync
+    watch(() => props.modelValue, (newValue) => {
+      rating.value = newValue;
+    });
 
     const setRating = (newRating) => {
       rating.value = newRating;
-      emit('ratingData', newRating);
+      emit('update:modelValue', newRating);
     };
 
     const hoverRating = (value) => {
-      if (isHovered.value) {
-        hoverValue.value = value;
-      }
+      hoverValue.value = value;
     };
 
     const resetHover = () => {
@@ -49,7 +52,7 @@ export default {
 
     return {
       rating,
-      isHovered,
+      hoverValue,
       hoverRating,
       resetHover,
       setRating,
@@ -60,18 +63,23 @@ export default {
 
 <style scoped>
 .star-rating {
-  display: inline-block;
+  display: inline-flex;
+  gap: 2px;
 }
 
 .star {
-  display: inline-block;
   font-size: 24px;
   cursor: pointer;
-  margin: 2px;
   color: rgb(222, 222, 222);
+  transition: color 0.15s ease;
+  user-select: none;
 }
 
 .filled {
   color: gold;
+}
+
+.star:hover {
+  transform: scale(1.1);
 }
 </style>
