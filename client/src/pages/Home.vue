@@ -5,8 +5,15 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const subjects = ref([]);
 
-const goToRating = () => {
-    router.push('/rating');
+const goToRating = (subject) => {
+    router.push({
+        path: '/rating',
+        query: { 
+            id: subject.id,
+            subject: subject.subject,
+            teacher: subject.teacher
+        }
+    });
 }
 
 onMounted(async () => {
@@ -25,7 +32,7 @@ onMounted(async () => {
             <div class="title has-text-centered">
                 Õppeained
             </div>
-            <div class="card mb-5" v-for="subject in subjects" :key="subject.id" @click="goToRating">
+            <div class="card mb-5" v-for="subject in subjects" :key="subject.id" @click="goToRating(subject)">
                 <div class="card-content">
                     <p class="is-size-5">{{ subject.subject }}</p>
                     <p class="is-size-7">{{ subject.teacher }}</p>
