@@ -1,29 +1,22 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
-const subjects = [
-    'Matemaatika',
-    'Hajusrakenduste alused',
-    'Vene keel',
-    'Serveri poolsed tehnoloogiad veebi rakenduste loomiseks',
-    'Küberturbe alused',
-    'Testimis alused ja testimisplaan',
-    'Riistvaralähedane programmeerimine',
-    'Individuaalne valikaine (Arvutimängude loomine)',
-    'Tarkvaraarenduse meetodid',
-    'Kirjandiõpetus',
-    'Rühmajuhataja tund',
-    'Andmebaasid',
-    'Blockchain',
-    'Projekt',
-    'Soome keel'
-];
-
-const router = useRouter()
+const router = useRouter();
+const subjects = ref([]);
 
 const goToRating = () => {
-    router.push('/rating')
+    router.push('/rating');
 }
+
+onMounted(async () => {
+    try {
+        const res = await fetch('http://localhost:3000/subjects');
+        subjects.value = await res.json();
+    } catch (err) {
+        console.error(err);
+    }
+});
 </script>
 
 <template>
@@ -32,9 +25,10 @@ const goToRating = () => {
             <div class="title has-text-centered">
                 Õppeained
             </div>
-            <div class="card mb-5" v-for="(subject, i) in subjects" :key="i" @click="goToRating">
+            <div class="card mb-5" v-for="subject in subjects" :key="subject.id" @click="goToRating">
                 <div class="card-content">
-                    <div class="content">{{ subject }}</div>
+                    <p class="is-size-5">{{ subject.subject }}</p>
+                    <p class="is-size-7">{{ subject.teacher }}</p>
                 </div>
             </div>
         </div>
@@ -45,8 +39,8 @@ const goToRating = () => {
 .card {
     min-height: 70px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 .card:hover {
